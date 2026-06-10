@@ -1,8 +1,9 @@
 import type { CreatePatientProfileInput } from "@/lib/validations";
 
 /** A stored patient profile, as exposed by the GraphQL API. */
-export interface PatientProfile extends CreatePatientProfileInput {
+export interface PatientProfile extends Omit<CreatePatientProfileInput, "consent"> {
   id: string;
+  consent: boolean; // always true in practice; literal-true is enforced on input
   createdAt: string; // ISO timestamp
 }
 
