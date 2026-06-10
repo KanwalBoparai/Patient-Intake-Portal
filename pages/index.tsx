@@ -121,10 +121,10 @@ export default function IntakePage() {
   };
 
   return (
-    <main className="page-shell max-w-2xl">
+    <main className="page-shell page-shell-narrow">
       <header className="page-header">
         <p className="brand-mark">
-          <HeartPulse className="h-4 w-4" aria-hidden />
+          <HeartPulse className="icon-sm" aria-hidden />
           Reimagine Health
         </p>
         <h1 className="page-title">Patient intake</h1>
@@ -134,9 +134,9 @@ export default function IntakePage() {
       </header>
 
       {stage === "success" ? (
-        <Card className="animate-in fade-in zoom-in-95 duration-500">
-          <CardContent className="flex flex-col items-center gap-3 p-10 text-center">
-            <CheckCircle2 className="h-12 w-12 text-primary" aria-hidden />
+        <Card className="success-enter">
+          <CardContent className="stack-center gap-3 p-10">
+            <CheckCircle2 className="icon-hero" aria-hidden />
             <CardTitle>Your intake form has been submitted</CardTitle>
             <CardDescription>
               Our team will review your information and reach out if anything else is needed.
@@ -156,15 +156,15 @@ export default function IntakePage() {
                 <CardDescription>{STEP_COPY[step].description}</CardDescription>
               </CardHeader>
               <CardContent className="grid gap-5">
-                <div key={step} className="animate-in fade-in slide-in-from-right-2 duration-300">
+                <div key={step} className="step-enter">
                   {step === 1 && <DemographicsStep form={form} />}
                   {step === 2 && <DocumentsStep form={form} />}
                   {step === 3 && <ConfirmationStep form={form} />}
                 </div>
 
                 {submitError && (
-                  <Alert variant="destructive" className="animate-in fade-in duration-300">
-                    <AlertCircle className="h-4 w-4" aria-hidden />
+                  <Alert variant="destructive" className="fade-enter">
+                    <AlertCircle className="icon-sm" aria-hidden />
                     <AlertTitle>Submission failed</AlertTitle>
                     <AlertDescription>{submitError}</AlertDescription>
                   </Alert>
@@ -188,10 +188,10 @@ export default function IntakePage() {
                     Next
                   </Button>
                 ) : (
-                  <Button type="submit" disabled={isSubmitting} className="min-w-44">
+                  <Button type="submit" disabled={isSubmitting} className="submit-wide">
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+                        <Loader2 className="icon-spin" aria-hidden />
                         {STAGE_COPY[stage]}
                       </>
                     ) : (
@@ -205,8 +205,8 @@ export default function IntakePage() {
         </>
       )}
 
-      <p className="mt-8 text-center">
-        <Link href="/admin" className="field-hint underline-offset-4 hover:underline">
+      <p className="page-footer">
+        <Link href="/admin" className="footer-link">
           Staff? Open the admin dashboard
         </Link>
       </p>
