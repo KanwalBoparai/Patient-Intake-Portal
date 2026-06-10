@@ -191,3 +191,13 @@ Options: switch to `mode: "onChange"` (errors appear while typing fresh fields �
 
 **D41 — Brand mark icon.**
 **Choice:** `HeartPulse` lucide icon added to the "Reimagine Health" mark on both pages for cross-page identity.
+
+---
+
+## Decisions from live integration (2026-06-10)
+
+**D42 — @vercel/blob 0.27 → 2.4.**
+Found during the first live upload: SDK 0.27 speaks a Blob API version that newly-created stores no longer serve (browser PUTs 404'd). Upgraded to 2.4.0 — `handleUpload`/`upload` call sites unchanged. Also dropped the no-op `onUploadCompleted` (2.x warns when no callback URL is derivable on localhost, and our insert path never depended on the webhook).
+
+**D43 — Public Blob store required.**
+First store was created with Private access; the API rejects `access: "public"` uploads against it, and private blobs would break the assignment's "previews rendered from the stored blob URLs" requirement. Store recreated as Public. Signed, short-lived read URLs for PHI remain the documented production upgrade in the TRD.

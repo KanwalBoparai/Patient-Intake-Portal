@@ -30,11 +30,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           addRandomSuffix: true,
         };
       },
-      // Fires on deployed environments after the blob lands. The profile
-      // row is inserted by the createPatientProfile mutation only after
-      // BOTH files have final URLs (see the intake submit flow), so a
-      // half-finished upload can never produce a database record.
-      onUploadCompleted: async () => {},
+      // No onUploadCompleted webhook: the profile row is inserted by the
+      // createPatientProfile mutation only after BOTH files have final
+      // URLs (see the intake submit flow), so a half-finished upload can
+      // never produce a database record.
     });
 
     return res.status(200).json(jsonResponse);
