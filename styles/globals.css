@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 180 20% 99%;
+    --foreground: 200 50% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 200 50% 10%;
+    --primary: 173 80% 28%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 180 25% 94%;
+    --secondary-foreground: 200 50% 14%;
+    --muted: 180 16% 94%;
+    --muted-foreground: 200 12% 42%;
+    --accent: 173 60% 92%;
+    --accent-foreground: 173 80% 18%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 190 18% 88%;
+    --input: 190 18% 84%;
+    --ring: 173 80% 28%;
+    --radius: 0.625rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+/* Semantic page-level classes — keeps /index and /admin markup down to
+   spacing/layout utilities only (per assignment styling constraint). */
+@layer components {
+  .page-shell {
+    @apply mx-auto w-full px-4 py-10 sm:px-6 sm:py-14;
+  }
+
+  .page-header {
+    @apply mb-8 text-center;
+  }
+
+  .page-title {
+    @apply text-2xl font-semibold tracking-tight sm:text-3xl;
+  }
+
+  .page-subtitle {
+    @apply mt-2 text-sm text-muted-foreground sm:text-base;
+  }
+
+  .brand-mark {
+    @apply mb-3 inline-flex items-center gap-2 text-sm font-medium uppercase tracking-widest text-primary;
+  }
+
+  .field-error {
+    @apply text-sm font-medium text-destructive;
+  }
+
+  .field-hint {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .summary-label {
+    @apply text-xs font-medium uppercase tracking-wide text-muted-foreground;
+  }
+
+  .summary-value {
+    @apply mt-0.5 text-sm font-medium;
+  }
+}
