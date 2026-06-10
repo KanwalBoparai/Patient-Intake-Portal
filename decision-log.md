@@ -201,3 +201,16 @@ Found during the first live upload: SDK 0.27 speaks a Blob API version that newl
 
 **D43 — Public Blob store required.**
 First store was created with Private access; the API rejects `access: "public"` uploads against it, and private blobs would break the assignment's "previews rendered from the stored blob URLs" requirement. Store recreated as Public. Signed, short-lived read URLs for PHI remain the documented production upgrade in the TRD.
+
+---
+
+## Decisions from the final compliance pass (2026-06-10)
+
+**D44 — Styling-rule remediation.**
+Final review caught that the motion-polish pass (D39) had left animation/size/color utilities inline on the two page files, violating the brief's "only padding/margin/flex/grid inline on /index and /admin" rule. Extracted to semantic classes in globals.css (`step-enter`, `success-enter`, `fade-enter`, `icon-sm/spin/hero/empty`, `stack-center`, `submit-wide`, `page-footer`, `footer-link`, `panel-narrow`, `page-shell-narrow/wide`, `grid-loading`, `empty-title`). Pages now carry only spacing/layout utilities inline.
+
+**D45 — `/index` redirect.**
+The brief names the page `/index`; Pages Router serves it at `/` and 404s the literal path. Added a permanent redirect in next.config.mjs so either URL works.
+
+**D46 — Screenshots shipped in-repo.**
+The submission asks for a screenshots link; since the repo is private and shared with the grader, `screenshots/` (8 curated frames, three captured on the live deployment) embedded in the README doubles as that link with zero extra hosting.

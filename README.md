@@ -5,14 +5,19 @@ operational admin dashboard. Next.js Pages Router · Tailwind + shadcn-style
 components · GraphQL (Apollo Server + Client) · Supabase Postgres · Vercel
 Blob · React-Hook-Form + Zod · Ag-Grid.
 
+**Live deployment:** https://patient-intake-portal-seven.vercel.app
+
 ## Run
+
+Requires Node ≥ 18.18 (any current LTS). pnpm is pinned via the
+`packageManager` field — `corepack enable` provides it if you don't have it.
 
 ```bash
 pnpm install
 pnpm dev        # http://localhost:3000 (patient form) and /admin (dashboard)
 ```
 
-`.env` is committed (per assignment instructions) and must contain real values:
+`.env` is committed (per assignment instructions) and contains working values:
 
 ## Setup (one-time)
 
@@ -48,3 +53,15 @@ pnpm dev        # http://localhost:3000 (patient form) and /admin (dashboard)
   constraints.
 
 Decisions and trade-offs are logged in [decision-log.md](decision-log.md).
+
+## Screenshots
+
+Captured from the running app (05–07 on the live Vercel deployment).
+
+| Intake | Admin |
+| --- | --- |
+| ![Step 1](screenshots/01-intake-step1.png) | ![Grid](screenshots/06-admin-grid.png) |
+| ![Validation](screenshots/02-intake-validation.png) | ![Preview](screenshots/07-admin-preview.png) |
+| ![Documents](screenshots/03-intake-documents.png) | |
+| ![Confirm](screenshots/04-intake-confirm.png) | |
+| ![Success](screenshots/05-intake-success.png) | ![Mobile](screenshots/08-intake-mobile.png) |
