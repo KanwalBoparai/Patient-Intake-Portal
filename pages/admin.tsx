@@ -1,4 +1,4 @@
-import { AlertCircle, Inbox } from "lucide-react";
+import { AlertCircle, HeartPulse, Inbox } from "lucide-react";
 import type { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 
@@ -23,7 +23,10 @@ export default function AdminPage({ profiles, error }: AdminPageProps) {
   return (
     <main className="page-shell max-w-7xl">
       <header className="page-header">
-        <p className="brand-mark">Reimagine Health</p>
+        <p className="brand-mark">
+          <HeartPulse className="h-4 w-4" aria-hidden />
+          Reimagine Health
+        </p>
         <h1 className="page-title">Patient submissions</h1>
         <p className="page-subtitle">
           {profiles.length} intake {profiles.length === 1 ? "record" : "records"} — click a

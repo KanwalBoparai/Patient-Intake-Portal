@@ -173,3 +173,21 @@ Options: RHF `Controller` for the phone field vs. overriding `register`'s onChan
 
 **D37 — .env placeholders.**
 **Choice:** `.env` committed with clearly-marked placeholders; the repo owner pastes real Supabase/Blob values before pushing (Claude cannot provision third-party accounts). README documents the two one-time setup steps.
+
+---
+
+## Decisions from the UI polish pass (2026-06-10)
+
+**D38 — Reward-early validation.**
+Problem found by driving the real UI: pre-submit, RHF `onTouched` mode only clears errors on blur, so a fixed field kept its error until the user clicked away — and the blur-triggered layout shift could move the Next button mid-click (reproduced: an automated click missed entirely).
+Options: switch to `mode: "onChange"` (errors appear while typing fresh fields — hostile), `mode: "all"` (same problem), or a watch subscription that re-validates only fields that currently show an error.
+**Choice:** the watch subscription (4 lines in `pages/index.tsx`): errors appear on blur/Next as before, but disappear the moment the value becomes valid. Standard "reward early, punish late" pattern.
+
+**D39 — Motion polish.**
+**Choice:** tailwindcss-animate only (no new dependency): step content fades/slides on step change (`key={step}`), success card zooms in, submission error fades in, stepper connectors get color transitions. Subtle radial teal washes on the body background and a soft primary-tinted card shadow for depth. Durations 300–500ms.
+
+**D40 — Invalid-file thumbnail guard.**
+**Choice:** thumbnails render only for accepted MIME types; a rejected file (PDF/HEIC) shows a `FileWarning` icon + filename + size beside its validation error instead of a broken `<img>`.
+
+**D41 — Brand mark icon.**
+**Choice:** `HeartPulse` lucide icon added to the "Reimagine Health" mark on both pages for cross-page identity.

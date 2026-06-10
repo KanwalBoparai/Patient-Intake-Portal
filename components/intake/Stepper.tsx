@@ -22,7 +22,10 @@ export function Stepper({ currentStep }: { currentStep: number }) {
           >
             {i > 0 && (
               <span
-                className={cn("h-px w-6 sm:w-10", isDone || isActive ? "bg-primary" : "bg-border")}
+                className={cn(
+                  "h-px w-6 transition-colors duration-300 sm:w-10",
+                  isDone || isActive ? "bg-primary" : "bg-border"
+                )}
               />
             )}
             <span

@@ -1,8 +1,8 @@
 import { useMutation } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
+import { AlertCircle, CheckCircle2, HeartPulse, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { ConfirmationStep } from "@/components/intake/ConfirmationStep";
@@ -59,6 +59,17 @@ export default function IntakePage() {
 
   const isSubmitting = stage !== "idle" && stage !== "success";
 
+  // Reward-early validation: once a field shows an error, re-check it on
+  // every change so the message clears the moment the value is fixed,
+  // instead of lingering until blur (which also shifts the layout right
+  // when the user reaches for the button).
+  useEffect(() => {
+    const sub = form.watch((_values, { name }) => {
+      if (name && form.getFieldState(name).error) void form.trigger(name);
+    });
+    return () => sub.unsubscribe();
+  }, [form]);
+
   const goNext = async () => {
     const valid = await form.trigger(STEP_FIELDS[step], { shouldFocus: true });
     if (valid) setStep((s) => s + 1);
@@ -112,7 +123,10 @@ export default function IntakePage() {
   return (
     <main className="page-shell max-w-2xl">
       <header className="page-header">
-        <p className="brand-mark">Reimagine Health</p>
+        <p className="brand-mark">
+          <HeartPulse className="h-4 w-4" aria-hidden />
+          Reimagine Health
+        </p>
         <h1 className="page-title">Patient intake</h1>
         <p className="page-subtitle">
           Three quick steps — about two minutes to complete.
@@ -120,7 +134,7 @@ export default function IntakePage() {
       </header>
 
       {stage === "success" ? (
-        <Card>
+        <Card className="animate-in fade-in zoom-in-95 duration-500">
           <CardContent className="flex flex-col items-center gap-3 p-10 text-center">
             <CheckCircle2 className="h-12 w-12 text-primary" aria-hidden />
             <CardTitle>Your intake form has been submitted</CardTitle>
@@ -142,12 +156,14 @@ export default function IntakePage() {
                 <CardDescription>{STEP_COPY[step].description}</CardDescription>
               </CardHeader>
               <CardContent className="grid gap-5">
-                {step === 1 && <DemographicsStep form={form} />}
-                {step === 2 && <DocumentsStep form={form} />}
-                {step === 3 && <ConfirmationStep form={form} />}
+                <div key={step} className="animate-in fade-in slide-in-from-right-2 duration-300">
+                  {step === 1 && <DemographicsStep form={form} />}
+                  {step === 2 && <DocumentsStep form={form} />}
+                  {step === 3 && <ConfirmationStep form={form} />}
+                </div>
 
                 {submitError && (
-                  <Alert variant="destructive">
+                  <Alert variant="destructive" className="animate-in fade-in duration-300">
                     <AlertCircle className="h-4 w-4" aria-hidden />
                     <AlertTitle>Submission failed</AlertTitle>
                     <AlertDescription>{submitError}</AlertDescription>

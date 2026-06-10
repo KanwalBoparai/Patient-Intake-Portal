@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { ImageUp } from "lucide-react";
+import { FileWarning, ImageUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { UseFormReturn } from "react-hook-form";
 
@@ -21,7 +21,9 @@ function FileField({ form, name, label }: FileFieldProps) {
   const [preview, setPreview] = useState<string>();
 
   useEffect(() => {
-    if (!(file instanceof File)) {
+    // Only build a thumbnail for files we can actually render — a rejected
+    // PDF/HEIC would otherwise show a broken image next to its error.
+    if (!(file instanceof File) || !ACCEPTED_IMAGE_TYPES.includes(file.type)) {
       setPreview(undefined);
       return;
     }
@@ -46,13 +48,20 @@ function FileField({ form, name, label }: FileFieldProps) {
         htmlFor={name}
         className="flex min-h-[7rem] cursor-pointer items-center justify-center gap-4 rounded-lg border-2 border-dashed border-input bg-card p-4 transition-colors hover:border-primary/60 hover:bg-accent/40"
       >
-        {file instanceof File && preview ? (
+        {file instanceof File ? (
           <>
-            <img
-              src={preview}
-              alt={`${label} preview`}
-              className="h-20 w-28 rounded-md border object-cover"
-            />
+            {preview ? (
+              <img
+                src={preview}
+                alt={`${label} preview`}
+                className="h-20 w-28 rounded-md border object-cover"
+              />
+            ) : (
+              <FileWarning
+                className="h-10 w-10 shrink-0 text-muted-foreground"
+                aria-hidden
+              />
+            )}
             <span className="min-w-0 text-left">
               <span className="block truncate text-sm font-medium">{file.name}</span>
               <span className="field-hint block">{formatFileSize(file.size)}</span>
