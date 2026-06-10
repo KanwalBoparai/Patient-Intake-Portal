@@ -145,3 +145,31 @@ Options: open blob URL in new tab vs. in-app modal preview.
 
 **D30 — Commit narrative.**
 **Choice:** ~10 incremental commits in dependency order (docs → scaffold → schemas → UI kit → GraphQL/DB → upload → intake → admin → env/README → TRD), TRD strictly last per assignment instructions.
+
+---
+
+## Decisions made during implementation
+
+**D31 — Executable schema package.**
+Options: rely on Apollo Server's internal schema (not exported) vs. adding `@graphql-tools/schema`.
+**Choice:** added `@graphql-tools/schema` (already an Apollo dependency family) so one `makeExecutableSchema` output is shared by the `/api/graphql` handler and the SSR SchemaLink client — both paths run identical resolvers.
+
+**D32 — Ag-Grid rendered client-side only.**
+Options: render the grid during SSR vs. `next/dynamic` with `ssr: false`.
+**Choice:** dynamic client-only grid. Ag-Grid touches browser APIs at render; the data still arrives via SSR (`getServerSideProps`), which is what the assignment requires — only the table widget hydrates client-side.
+
+**D33 — Apollo Client split (browser vs. SSR).**
+**Choice:** `lib/apollo.ts` (HttpLink, used by `ApolloProvider`/`useMutation`) kept separate from `lib/apollo-ssr.ts` (SchemaLink, imports server code). Next.js strips `getServerSideProps`-only imports from the client bundle, so Supabase/service-role code never ships to the browser.
+
+**D34 — PatientProfile consent typing.**
+**Choice:** input type keeps Zod's literal `true`; the stored/output `PatientProfile` type widens consent to `boolean` (DB column is boolean; literal-true is an input-validation concern, not a storage shape).
+
+**D35 — Cross-page navigation.**
+**Choice:** discreet "Staff? Open the admin dashboard" footer link on the intake page; admin header shows live record count. Keeps the two pages visually consistent (same `page-header` pattern) per the grading rubric.
+
+**D36 — Phone formatting wiring.**
+Options: RHF `Controller` for the phone field vs. overriding `register`'s onChange with `setValue(formatPhone(...))`.
+**Choice:** the `setValue` override — one line, keeps the field registered like its siblings; validation still runs on blur/trigger (`mode: "onTouched"`).
+
+**D37 — .env placeholders.**
+**Choice:** `.env` committed with clearly-marked placeholders; the repo owner pastes real Supabase/Blob values before pushing (Claude cannot provision third-party accounts). README documents the two one-time setup steps.
