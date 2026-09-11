@@ -1,5 +1,7 @@
 # Reimagine Health — Patient Intake Portal
 
+[![CI](https://github.com/KanwalBoparai/Patient-Intake-Portal/actions/workflows/ci.yml/badge.svg)](https://github.com/KanwalBoparai/Patient-Intake-Portal/actions/workflows/ci.yml)
+
 Patient intake in three steps (demographics → documents → consent) with an
 operational admin dashboard. Next.js Pages Router · Tailwind + shadcn-style
 components · GraphQL (Apollo Server + Client) · Supabase Postgres · Vercel
